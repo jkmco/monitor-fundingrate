@@ -28,9 +28,11 @@ app.use(express.json());
 require("./startup/db")(DB_URI);
 
 // main
-app.get("/", (req, res) => {
-  res.send("hello")
-})
+const { saveMarkets } = require("./services/saveMarkets");
+
+(async () => {
+  await saveMarkets();
+})();
 
 // listen to server
 app.listen(PORT, () => {
