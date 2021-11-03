@@ -3,10 +3,10 @@ const FundingRateDifference = require("../models/FundingRateDifference");
 const { allFutures } = require("./getFutures");
 /////////////////////  how to use /////////////////////////
 /*
-const { saveFundingRateDifference } = require("./utils/saveFundingRateDifference");
+const { saveFundingRateDifference } = require("./services/saveFundingRateDifference");
 
 (async () => {
-  await saveFundingRateDifference(["ftx", "bybit"]);
+  await saveFundingRateDifference(["ftx", "bybit", "kucoin"]);
 })();
 */
 /////////////////////  how to use /////////////////////////

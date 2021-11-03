@@ -28,15 +28,52 @@ app.use(express.json());
 require("./startup/db")(DB_URI);
 
 // main
+const { saveFundingRates } = require("./services/saveFundingRates");
+const {
+  saveFundingRateDifference,
+} = require("./services/saveFundingRateDifference");
 
 const {
   generateFundingRateAlert,
   saveFundingRateToAppConfig,
 } = require("./services/generateFundingRateAlert");
-(async () => {
-  await generateFundingRateAlert(3);
-  await saveFundingRateToAppConfig(3);
-})();
+
+const cron = require("node-cron");
+
+async function init() {
+  console.log(">> monitor-fundingrate initiailize >>");
+
+  // load app config
+  console.log(">> loading app config >>");
+
+  const limit = (await getAppConfigValue("monitor-fundingrate@limit")) || 3;
+
+  console.log(`>> app config loaded! : limit ${limit} >>`);
+
+  // start to run
+
+  console.log(
+    `>> start to run the generateFundingRateAlert! with limit ${limit}, waiting the hourly update... >>`
+  );
+
+  cron.schedule("0 28 * * * *", async () => {
+    await console.log(">> start to save funding rate");
+    await saveFundingRates(["ftx", "bybit", "kucoin"]);
+
+    await console.log(">> start to save funding rate difference");
+    await saveFundingRateDifference(["ftx", "bybit", "kucoin"]);
+
+    await console.log(">> start to generate funding rate alert");
+    await generateFundingRateAlert(limit);
+
+    await console.log(">> start to save top funding rate into AppConfig");
+    await saveFundingRateToAppConfig(limit);
+
+    await console.log(">> finished generating funding rate!");
+  });
+}
+
+init();
 
 // listen to server
 app.listen(PORT, () => {
