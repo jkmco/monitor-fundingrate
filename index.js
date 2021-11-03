@@ -56,7 +56,7 @@ async function init() {
     `>> start to run the generateFundingRateAlert! with limit ${limit}, waiting the hourly update... >>`
   );
 
-  cron.schedule("0 28 * * * *", async () => {
+  cron.schedule("0 50 * * * *", async () => {
     await console.log(">> start to save funding rate");
     await saveFundingRates(["ftx", "bybit", "kucoin"]);
 
