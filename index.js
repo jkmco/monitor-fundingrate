@@ -29,15 +29,13 @@ require("./startup/db")(DB_URI);
 
 // main
 
-const { saveFundingRates } = require("./services/saveFundingRates");
-
 const {
-  saveFundingRateDifference,
-} = require("./services/saveFundingRateDifference");
-
+  generateFundingRateAlert,
+  saveFundingRateToAppConfig,
+} = require("./services/generateFundingRateAlert");
 (async () => {
-  await saveFundingRates(["ftx", "bybit", "kucoin"]);
-  await saveFundingRateDifference(["ftx", "bybit", "kucoin"]);
+  await generateFundingRateAlert(3);
+  await saveFundingRateToAppConfig(3);
 })();
 
 // listen to server
