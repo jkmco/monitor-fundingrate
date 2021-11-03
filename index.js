@@ -28,10 +28,16 @@ app.use(express.json());
 require("./startup/db")(DB_URI);
 
 // main
-const { saveMarkets } = require("./services/saveMarkets");
+
+const { saveFundingRates } = require("./services/saveFundingRates");
+
+const {
+  saveFundingRateDifference,
+} = require("./services/saveFundingRateDifference");
 
 (async () => {
-  await saveMarkets();
+  await saveFundingRates(["ftx", "bybit", "kucoin"]);
+  await saveFundingRateDifference(["ftx", "bybit", "kucoin"]);
 })();
 
 // listen to server
