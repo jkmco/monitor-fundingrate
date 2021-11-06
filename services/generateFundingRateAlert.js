@@ -57,13 +57,12 @@ async function generateFundingRateAlert(limit) {
     const time = new Date(Date.now());
 
     let content = "";
-    content += `💸💸💸 This hour top ${limit} funding rate💸💸💸\n`;
+    content += `💸💸 This hour top ${limit} funding rate💸💸\n\n`;
 
     for (i in result) {
-      content += `#${parseInt(i) + 1}\n`;
-      content += `${result[i].base} : ${(result[i].difference * 100).toFixed(
-        3
-      )}%\n`;
+      content += `#${parseInt(i) + 1} ${result[i].base} : ${(
+        result[i].difference * 100
+      ).toFixed(3)}%\n`;
       content += `${result[i].maxEx} (${(result[i].maxRate * 100).toFixed(
         3
       )}%) > ${result[i].minEx} (${(result[i].minRate * 100).toFixed(3)}%)\n\n`;

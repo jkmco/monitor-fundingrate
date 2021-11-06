@@ -32,10 +32,10 @@ async function saveFundingRateDifference(exchangeArray) {
       difference: 0,
       maxEx: "",
       maxSymbol: "",
-      maxRate: 0,
+      maxRate: -100,
       minEx: "",
       minSymbol: "",
-      minRate: 10,
+      minRate: 100,
     };
 
     if (result.length > 1) {
