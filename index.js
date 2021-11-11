@@ -57,7 +57,7 @@ async function init() {
   );
 
   cron.schedule("0 50 * * * *", async () => {
-    await console.log(">> start to save funding rate");
+    await console.log(">> start to save funding rate ");
     await saveFundingRates(["ftx", "bybit", "kucoin"]);
 
     await console.log(">> start to save funding rate difference");
